@@ -4,25 +4,121 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Developer Tools</title>
+<title>AI Developer Tools - Code Explainer</title>
 <style>
+* { box-sizing: border-box; }
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
-  background: #101827;
-  color: white;
-  text-align: center;
-  padding: 60px 20px;
+  background: #0f172a;
+  color: #f8fafc;
 }
-h1 { color: #75e4c2; }
-a { color: #75e4c2; }
+main {
+  max-width: 850px;
+  margin: auto;
+  padding: 32px 18px;
+}
+h1 { color: #67e8f9; }
+p { color: #cbd5e1; line-height: 1.6; }
+textarea {
+  width: 100%;
+  height: 210px;
+  padding: 15px;
+  background: #1e293b;
+  color: white;
+  border: 1px solid #475569;
+  border-radius: 10px;
+  font-family: monospace;
+  font-size: 14px;
+}
+button {
+  padding: 13px 22px;
+  margin-top: 14px;
+  background: #22d3ee;
+  color: #082f49;
+  border: none;
+  border-radius: 9px;
+  font-weight: bold;
+  cursor: pointer;
+}
+#result {
+  margin-top: 25px;
+  padding: 20px;
+  background: #1e293b;
+  border-radius: 12px;
+  white-space: pre-wrap;
+  line-height: 1.8;
+}
+small { color: #94a3b8; }
 </style>
 </head>
 <body>
+<main>
 <h1>AI Developer Tools</h1>
-<p>Open-source AI developer tools project.</p>
-<p>Project Status: Early Development</p>
-<a href="https://github.com/ajaysanchaniya123-a11y/ai-developer-tools">
-View Our GitHub Project
-</a>
+<p>Free Code Explainer</p>
+<p>Paste JavaScript, HTML or CSS code to get
+a simple explanation of common patterns.</p>
+
+<textarea id="code"
+placeholder="Paste your code here..."></textarea>
+
+<button onclick="explainCode()">
+Explain My Code
+</button>
+
+<div id="result" aria-live="polite">
+Your explanation will appear here.
+</div>
+
+<p><small>
+Free and open-source. Rule-based explanations.
+No AI model or external API is used.
+</small></p>
+</main>
+
+<script>
+function explainCode() {
+  const code = document.getElementById("code").value;
+  const result = document.getElementById("result");
+
+  if (!code.trim()) {
+    result.textContent = "Please paste some code first.";
+    return;
+  }
+
+  let notes = [];
+
+  if (/\b(function|=>)\b/.test(code))
+    notes.push("Function: Defines reusable logic.");
+
+  if (/\b(const|let|var)\b/.test(code))
+    notes.push("Variable: Stores a value or reference.");
+
+  if (/\bif\s*\(/.test(code))
+    notes.push("Condition: Runs code when a condition is true.");
+
+  if (/\b(for|while)\s*\(/.test(code))
+    notes.push("Loop: Repeats instructions.");
+
+  if (/\bconsole\.log\s*\(/.test(code))
+    notes.push("Console output: Prints debugging information.");
+
+  if (/<[a-z][\s>]/i.test(code))
+    notes.push("HTML: Defines webpage structure.");
+
+  if (/\b(color|background|margin|padding)\s*:/.test(code))
+    notes.push("CSS: Controls visual appearance and spacing.");
+
+  if (/\b(fetch|async|await)\b/.test(code))
+    notes.push("Asynchronous operation: May involve waiting for a task or request.");
+
+  if (!notes.length)
+    notes.push("No supported patterns detected. Try JavaScript, HTML or CSS.");
+
+  result.textContent = "Code Analysis\n\n" +
+    notes.map((note, i) => (i + 1) + ". " + note).join("\n\n");
+}
+</script>
 </body>
-</html>
+  </html>
+  
